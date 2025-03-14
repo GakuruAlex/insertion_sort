@@ -1,25 +1,44 @@
 from typing import List, Dict
 def insert_sort(numbers: List[int], ascending: bool = True)-> List[int]:
+    """_Sort a list of numbers in given order_
+
+    Args:
+        numbers (List[int]): _A list of integers_
+        ascending (bool, optional): _Order of sorting_. Defaults to True.
+
+    Returns:
+        List[int]: _Sorted list either ascending or descending_
+    """
     key: int = 0
+    index_to_move = 0
+    found = False
 
     while key < len(numbers):
-        smallest = numbers[key]
-        smallest_value: Dict[int, int] ={}
+        number_to_move = numbers[key]
+
         for index in range(key, len(numbers)):
-            if numbers[index] < smallest:
-                smallest = numbers[index]
-                smallest_value['smallest'] = index, smallest
-        if 'smallest' in smallest_value:
-            smallest_index = smallest_value['smallest'][0]
-            smallest_index_value = smallest_value['smallest'][1]
-            numbers[key], numbers[smallest_index]=  smallest_index_value, numbers[key]
+            if ascending:
+                if numbers[index] < number_to_move:
+                    number_to_move = numbers[index]
+                    index_to_move= index
+                    found = True
+
+            else:
+                if numbers[index] > number_to_move:
+                    number_to_move = numbers[index]
+                    index_to_move= index
+                    found = True
+        if found:
+            numbers[key], numbers[index_to_move]=  numbers[index_to_move], numbers[key]
+            found = False
             key += 1
         else:
-            break
+            key += 1
+
     return numbers
 def main() -> None:
-    numbers: List[int] = [5, 9, 7, 8, 4, 1, 2]
-    insert_sort(numbers= numbers)
+    numbers: List[int] = [-5, -9, 7, 8, -4, 1, -2]
+    insert_sort(numbers= numbers, ascending = True)
     print(f"Numbers sorted is {numbers}")
 
 if __name__ == "__main__":
